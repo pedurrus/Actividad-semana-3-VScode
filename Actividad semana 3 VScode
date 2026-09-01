@@ -1,0 +1,78 @@
+#Función sin retorno y sin parametros
+def titulo ():
+  print("="*40)
+  print("UNIVERSIDAD PRIVADA DEL NORTE")
+  print("="*40)
+
+  #Funcion con retorno
+def validar_nota(mensaje):
+  while True:
+    try:
+      nota=float(input(mensaje))
+      if nota>=0 and nota<=20:
+        return nota
+      else:
+        print("Error fuera de rango (0-20)")
+    except ValueError:
+      print("Error, ingresar un valor numerico!!!")
+
+#Funcion con retorno
+def calcular_EF (proyecto_final, laboratorio):
+  nota_EF = proyecto_final*0.6+laboratorio*0.4
+  return nota_EF
+
+#Funcion con retorno Cisco
+def bono_Cisco(nota_EF,tiene_cisco):
+  if tiene_cisco == "s":
+    nota_EF +=1
+    if nota_EF > 20:
+      nota_EF = 20
+  return nota_EF
+
+#Funcion con retorno promedio
+def promedio_final(T1,T2,T3,ep,ef):
+  promedio = T1 * 0.1 + T2 *0.1 + T3* 0.1 + ep *0.2 + ef *0.5
+  return promedio
+
+#Funcion con retorno estado academico
+def estado_acad(promedio):
+  if promedio >= 12:
+    estado = "APROBADO"
+  else:
+    estado = "DESAPROBADO"
+  return estado
+
+titulo()
+alumno = input("Ingresar nombre del estudiante: ")
+print("********Ingresar notas*******")
+
+T1= validar_nota("Ingrese la nota T1 (10%): ")
+T2= validar_nota("Ingresa la nota T2 (10%): ")
+T3= validar_nota("Ingresa la nota T3 (10%): ")
+ep= validar_nota("Ingresa la nota Examén parcial (20%): ")
+print("Ingresar notas para el Examen Final(50%): ")
+proyecto_final=validar_nota("Ingresar nota del proyecto final(60%): ")
+nota_lab=validar_nota("Ingresar la nota del laboratorio (40%): ")
+
+while True:
+  curso_cisco =input("Tiene certificado de curso cisco (s/n)").lower()
+  if curso_cisco in ['s' , 'n']:
+
+    break
+  print("Error ingresar solo [s o n]...!!!")
+nota_EF = calcular_EF(proyecto_final,nota_lab)
+nota_EF_Cisco = bono_Cisco(nota_EF,curso_cisco)
+promedio_pond = promedio_final(T1,T2,T3,ep,nota_EF_Cisco)
+estado = estado_acad(promedio_pond)
+
+print ("*"*40)
+print("REPORTE DE NOTAS")
+print( "*"*40)
+print("Estudiante: ",alumno)
+if curso_cisco == 's':
+
+  print ("Felicitaciones por llevar el curso de Cisco")
+print("Nota Examen Final: ", nota_EF_Cisco)
+print("Promedio ponderado: ", promedio_pond)
+print("Estado academico: ", estado)
+print ("*"*40)
